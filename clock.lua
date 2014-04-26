@@ -21,16 +21,17 @@ function Clock:setTime(time)
 end
 
 function Clock:draw()
-	local mytime = self.time * (8*60)/self.duration + 7*60
-	local min1 = math.floor(mytime / 600)
-	local min2 = math.floor(mytime / 60) % 10
-	local sec1 = math.floor((mytime % 60) / 10)
-	local sec2 = math.floor((mytime % 60) % 10)
+	local mytime = self.time * (8*60)/self.duration + 11*60
+	local hours = math.floor(mytime / 60) % 12
+	local hour1 = math.floor(hours / 10)
+	local hour2 = hours % 10
+	local min1 = math.floor((mytime % 60) / 10)
+	local min2 = math.floor((mytime % 60) % 10)
 
-	love.graphics.draw(self.img, self.quadDigit[min1], 61, 100)
-	love.graphics.draw(self.img, self.quadDigit[min2], 65, 100)
-	love.graphics.draw(self.img, self.quadDigit[sec1], 71, 100)
-	love.graphics.draw(self.img, self.quadDigit[sec2], 75, 100)
+	love.graphics.draw(self.img, self.quadDigit[hour1], 61, 100)
+	love.graphics.draw(self.img, self.quadDigit[hour2], 65, 100)
+	love.graphics.draw(self.img, self.quadDigit[min1], 71, 100)
+	love.graphics.draw(self.img, self.quadDigit[min2], 75, 100)
 end
 
 return Clock
