@@ -14,6 +14,7 @@ function love.load()
 	love.graphics.setDefaultFilter("nearest", "nearest")
 	love.graphics.setLineWidth(1)
 	love.graphics.setLineStyle("rough")
+	love.mouse.setVisible(false)
 
 	if love.graphics.isSupported("canvas") then
 		canvas = love.graphics.newCanvas(WIDTH, HEIGHT)

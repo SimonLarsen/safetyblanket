@@ -12,6 +12,8 @@ function Ingame:enter()
 	self.blanket = Blanket.create(self.world, WIDTH/2-26, HEIGHT/2-38, WIDTH/2+26, HEIGHT/2+42)
 
 	self.imgBackground = ResMgr.getImage("background.png")
+	self.imgCursorNormal = ResMgr.getImage("cursor_normal.png")
+	self.imgCursorPinch = ResMgr.getImage("cursor_pinch.png")
 end
 
 function Ingame:update(dt)
@@ -24,6 +26,13 @@ function Ingame:draw()
 	love.graphics.draw(self.imgBackground, 0, 0)
 	self.player:draw()
 	self.blanket:draw()
+
+	local mx, my = love.mouse.getPosition()
+	if love.mouse.isDown("l") then
+		love.graphics.draw(self.imgCursorPinch, mx, my, 0, 1, 1, 4, 12)
+	else
+		love.graphics.draw(self.imgCursorNormal, mx, my, 0, 1, 1, 4, 12)
+	end
 end
 
 function Ingame:leave()
