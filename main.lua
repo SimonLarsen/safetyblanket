@@ -35,7 +35,14 @@ function love.draw()
 	state:draw()
 	love.graphics.scale(SCALE, SCALE)
 	love.graphics.setCanvas()
-	love.graphics.draw(canvas, 0, 0)
+
+	if state.afterEffect then
+		state:afterEffect(canvas)
+		love.graphics.draw(canvas, 0, 0)
+		love.graphics.setShader()
+	else
+		love.graphics.draw(canvas, 0, 0)
+	end
 
 	love.graphics.pop()
 	love.graphics.print(love.timer.getFPS(), 16, 16)

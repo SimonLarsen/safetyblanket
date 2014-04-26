@@ -14,10 +14,13 @@ function Ingame:enter()
 	self.imgBackground = ResMgr.getImage("background.png")
 	self.imgCursorNormal = ResMgr.getImage("cursor_normal.png")
 	self.imgCursorPinch = ResMgr.getImage("cursor_pinch.png")
+
+	local shader = require("chromashader")
+	self.chromashader = love.graphics.newShader(shader.pixelcode, shader.vertexcode)
 end
 
 function Ingame:update(dt)
-	self.player:update(dt)
+	self.player:update(dt, self.blanket)
 	self.blanket:update(dt)
 	self.world:update(dt)
 end
@@ -36,7 +39,7 @@ function Ingame:draw()
 end
 
 function Ingame:leave()
-	
+
 end
 
 function Ingame:mousepressed(x, y, button)
@@ -45,6 +48,19 @@ end
 
 function Ingame:mousereleased(x, y, button)
 	self.blanket:mousereleased(x, y, button)
+end
+
+function Ingame:afterEffect(canvas)
+	local maxDanger = maxArg(
+		self.player.armLeftDanger,  self.player.armRightDanger,
+		self.player.legLeftDanger,  self.player.legRightDanger
+	)
+	if maxDanger > 0.6 then
+		love.graphics.setShader(self.chromashader)
+		local offx = (math.random()-0.5) / 40 * (maxDanger-0.6)
+		local offy = (math.random()-0.5) / 40 * (maxDanger-0.6)
+		self.chromashader:send("offset", {offx, offy})
+	end
 end
 
 return Ingame
