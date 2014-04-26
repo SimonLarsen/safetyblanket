@@ -28,7 +28,7 @@ end
 
 function Demon:setDanger(danger)
 	self.danger = danger
-	self.y = self.danger * 55
+	self.y = self.danger * 65 - 10
 end
 
 function Demon:draw()
