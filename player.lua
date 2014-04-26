@@ -24,12 +24,16 @@ function Player.create()
 	self.armLeftTarget, self.armRightTarget = 0, 0
 	self.legLeftTarget, self.legRightTarget = 0, 0
 	self.headDanger = 0
+	self.maxDanger = 0
 
 	self.armLeftDanger,  self.armRightDanger = 0, 0
 	self.legLeftDanger,  self.legRightDanger = 0, 0
 
 	self.imgTorso = ResMgr.getImage("torso.png")
 	self.animTorso = newAnimation(self.imgTorso, 32, 67, 0.2, 5)
+
+	self.imgTorsoPanic = ResMgr.getImage("torso_panic.png")
+	self.animTorsoPanic = newAnimation(self.imgTorsoPanic, 32, 67, 0.4, 2)
 
 	self.imgArmLeft = ResMgr.getImage("arm_left.png")
 	self.imgArmRight = ResMgr.getImage("arm_right.png")
@@ -52,6 +56,7 @@ end
 
 function Player:update(dt, blanket)
 	self.animTorso:update(dt)
+	self.animTorsoPanic:update(dt)
 
 	self.nextChange = self.nextChange - dt
 	if self.nextChange <= 0 then
@@ -91,6 +96,12 @@ function Player:update(dt, blanket)
 	else
 		self.headDanger = math.min(1, self.headDanger + dt*Player.DANGER_INCREASE)
 	end
+
+	self.maxDanger = maxArg(
+		self.armLeftDanger,  self.armRightDanger,
+		self.legLeftDanger,  self.legRightDanger,
+		self.headDanger
+	)
 end
 
 function Player:changePosition()
@@ -113,7 +124,11 @@ function Player:draw()
 	love.graphics.draw(self.imgLegLeft,  self.quadLegLeft[self.legLeft], 81, 105)
 	love.graphics.draw(self.imgLegRight, self.quadLegRight[self.legRight], 129, 105)
 
-	self.animTorso:draw(113, 41)
+	if self.maxDanger < 0.7 then
+		self.animTorso:draw(113, 41)
+	else
+		self.animTorsoPanic:draw(113, 41)
+	end
 end
 
 return Player
