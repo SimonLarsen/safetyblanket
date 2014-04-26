@@ -7,7 +7,7 @@ function Tentacle.create(dir)
 	self.dir = dir
 	self.nextSwitch = 0.1
 	self.img = ResMgr.getImage("tentacles.png")
-	self.anim = newAnimation(self.img, 60, 100, 1, 4)
+	self.anim = newAnimation(self.img, 60, 100, 1, 8)
 	self:setDanger(0)
 
 	return self
@@ -17,9 +17,12 @@ function Tentacle:update(dt)
 	self.nextSwitch = self.nextSwitch - dt
 	if self.nextSwitch <= 0 then
 		if math.random() < self.danger then
-			self.anim:seek(math.random(1, 4))
+			self.anim:seek(math.random(1, 8))
 		end
 		self.nextSwitch = 0.1
+	end
+	if self.anim.position > 4 and self.danger < 0.8 then
+		self.anim:seek(math.random(1, 4))
 	end
 end
 

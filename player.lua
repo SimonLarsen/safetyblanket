@@ -7,13 +7,13 @@ local legLeftPos  = { {120, 145}, {96, 137}, {84, 117} }
 local legRightPos = { {134, 145}, {160, 137}, {171, 117} }
 
 Player.DANGER_INCREASE = 0.1
-Player.DANGER_DECREASE = 0.1
+Player.DANGER_DECREASE = 0.15
 
 function Player.create()
 	local self = setmetatable({}, Player)
 
 	self.nextChange = 0
-	self.changeDelay = 5
+	self.changeDelay = 3
 
 	self.nextMove = 0
 	self.moveDelay = 0.5
