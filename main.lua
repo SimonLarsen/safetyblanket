@@ -6,10 +6,18 @@ ResMgr = require("resmgr")
 local Ingame = require("ingame")
 
 local state
+local canvas
 
 function love.load()
 	love.window.setMode(WIDTH*SCALE, HEIGHT*SCALE, {fullscreen=false, vsync=false})
 	love.graphics.setDefaultFilter("nearest", "nearest")
+	love.graphics.setLineWidth(1)
+	love.graphics.setLineStyle("rough")
+
+	if love.graphics.isSupported("canvas") then
+		canvas = love.graphics.newCanvas(WIDTH, HEIGHT)
+	end
+
 	switchState(Ingame)
 end
 
@@ -20,11 +28,19 @@ end
 function love.draw()
 	love.graphics.push()
 
-	love.graphics.scale(SCALE, SCALE)
-	state:draw()
+	if canvas then
+		love.graphics.setCanvas(canvas)
+		state:draw()
+		love.graphics.scale(SCALE, SCALE)
+		love.graphics.setCanvas()
+		love.graphics.draw(canvas, 0, 0)
+
+	else
+		love.graphics.scale(SCALE, SCALE)
+		state:draw()
+	end
 
 	love.graphics.pop()
-
 	love.graphics.print(love.timer.getFPS(), 16, 16)
 end
 

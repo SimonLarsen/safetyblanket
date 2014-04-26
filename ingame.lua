@@ -7,7 +7,7 @@ function Ingame:enter()
 	love.physics.setMeter(100/1.8)
 	self.world = love.physics.newWorld(0, 0, true)
 	
-	self.blanket = Blanket.create(self.world, WIDTH/2-25, HEIGHT/2-35, WIDTH/2+25, HEIGHT/2+35)
+	self.blanket = Blanket.create(self.world, WIDTH/2-24, HEIGHT/2-34, WIDTH/2+24, HEIGHT/2+34)
 
 	self.imgBackground = ResMgr.getImage("background.png")
 end

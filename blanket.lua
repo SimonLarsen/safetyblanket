@@ -1,15 +1,15 @@
 local Blanket = {}
 Blanket.__index = Blanket
 
-Blanket.LINEAR_DAMPING = 2
+Blanket.LINEAR_DAMPING = 3
 Blanket.ANGULAR_DAMPING = 3
 Blanket.DISTANCE = 4
 
 function Blanket.create(world, x1, y1, x2, y2)
 	local self = setmetatable({}, Blanket)
 
-	self.xpoints = math.floor((x2 - x1) / Blanket.DISTANCE)
-	self.ypoints = math.floor((y2 - y1) / Blanket.DISTANCE)
+	self.xpoints = math.ceil((x2 - x1) / Blanket.DISTANCE)
+	self.ypoints = math.ceil((y2 - y1) / Blanket.DISTANCE)
 
 	self:createMesh(world, x1, y1, x2, y2, Blanket.DISTANCE)
 	local shader = require("blanketshader")
@@ -60,9 +60,9 @@ function Blanket:update(dt)
 end
 
 function Blanket:draw()
-	--love.graphics.setColor(230, 150, 20)
+	-- Draw blanket
 	self.blanketShader:send("plaid", ResMgr.getImage("plaid.png"))
-	self.blanketShader:send("screen", {WIDTH*SCALE, HEIGHT*SCALE})
+	self.blanketShader:send("screen", {WIDTH, HEIGHT})
 	love.graphics.setShader(self.blanketShader)
 	for ix=1,self.xpoints-1 do
 		for iy=1,self.ypoints-1 do
@@ -74,7 +74,26 @@ function Blanket:draw()
 		end
 	end
 	love.graphics.setShader()
-	--love.graphics.setColor(255, 255, 255)
+
+	-- Draw outline
+	love.graphics.setColor(0, 0, 0)
+	for ix=1, self.xpoints-1 do
+		local t1 = self.p[ix-1][0].body
+		local t2 = self.p[ix][0].body
+		love.graphics.line(t1:getX(), t1:getY(), t2:getX(), t2:getY())
+		local b1 = self.p[ix-1][self.ypoints-1].body
+		local b2 = self.p[ix][self.ypoints-1].body
+		love.graphics.line(b1:getX(), b1:getY(), b2:getX(), b2:getY())
+	end
+	for iy=1, self.ypoints-1 do
+		local l1 = self.p[0][iy-1].body
+		local l2 = self.p[0][iy].body
+		love.graphics.line(l1:getX(), l1:getY(), l2:getX(), l2:getY())
+		local r1 = self.p[self.xpoints-1][iy-1].body
+		local r2 = self.p[self.xpoints-1][iy].body
+		love.graphics.line(r1:getX(), r1:getY(), r2:getX(), r2:getY())
+	end
+	love.graphics.setColor(255, 255, 255)
 end
 
 function Blanket:mousepressed(x, y, button)
@@ -85,7 +104,7 @@ function Blanket:mousepressed(x, y, button)
 		self.mousejoint = nil
 	end
 
-	local mindist = 999999
+	local mindist = 32
 	local closest = nil
 
 	for ix=0, self.xpoints-1 do
@@ -98,7 +117,9 @@ function Blanket:mousepressed(x, y, button)
 		end
 	end
 
-	self.mousejoint = love.physics.newMouseJoint(closest.body, x, y)
+	if closest then
+		self.mousejoint = love.physics.newMouseJoint(closest.body, x, y)
+	end
 end
 
 function Blanket:mousereleased(x, y, button)
