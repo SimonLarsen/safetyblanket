@@ -3,6 +3,7 @@ HEIGHT = 192
 SCALE = 4
 
 ResMgr = require("resmgr")
+require("AnAL")
 local Ingame = require("ingame")
 
 local state
