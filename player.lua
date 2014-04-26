@@ -4,10 +4,17 @@ Player.__index = Player
 function Player.create()
 	local self = setmetatable({}, Player)
 
-	self.time = 0
+	self.nextChange = 0
+	self.changeDelay = 5
+
+	self.nextMove = 0
+	self.moveDelay = 0.5
 
 	self.armLeft, self.armRight = 0, 0
 	self.legLeft, self.legRight = 0, 0
+
+	self.armLeftTarget, self.armRightTarget = 0, 0
+	self.legLeftTarget, self.legRightTarget = 0, 0
 
 	self.imgTorso = ResMgr.getImage("torso.png")
 	self.animTorso = newAnimation(self.imgTorso, 32, 67, 0.2, 5)
@@ -32,24 +39,42 @@ function Player.create()
 end
 
 function Player:update(dt)
-	self.time = self.time + dt*4
 	self.animTorso:update(dt)
 
-	self.armLeft  = math.sin(self.time)*1.49 + 1.5
-	self.armRight = math.sin(self.time)*1.49 + 1.5
-	self.legLeft  = math.sin(self.time)*1.49 + 1.5
-	self.legRight = math.sin(self.time)*1.49 + 1.5
+	self.nextChange = self.nextChange - dt
+	if self.nextChange <= 0 then
+		self.nextChange = self.changeDelay
+		self:changePosition()
+	end
+
+	self.nextMove = self.nextMove - dt
+	if self.nextMove <= 0 then
+		self.nextMove = self.moveDelay
+		self:move()
+	end
+end
+
+function Player:changePosition()
+	self.armLeftTarget  = math.random(0, 2)
+	self.armRightTarget = math.random(0, 2)
+	self.legLeftTarget  = math.random(0, 2)
+	self.legRightTarget = math.random(0, 2)
+end
+
+function Player:move()
+	self.armLeft = moveTowards(self.armLeft, self.armLeftTarget, 1)
+	self.armRight = moveTowards(self.armRight, self.armRightTarget, 1)
+	self.legLeft = moveTowards(self.legLeft, self.legLeftTarget, 1)
+	self.legRight = moveTowards(self.legRight, self.legRightTarget, 1)
 end
 
 function Player:draw()
-	--love.graphics.draw(self.imgTorso, 113, 41)
-	self.animTorso:draw(113, 41)
+	love.graphics.draw(self.imgArmLeft,  self.quadArmLeft[self.armLeft], 91, 69)
+	love.graphics.draw(self.imgArmRight, self.quadArmRight[self.armRight], 134, 69)
+	love.graphics.draw(self.imgLegLeft,  self.quadLegLeft[self.legLeft], 104, 105)
+	love.graphics.draw(self.imgLegRight, self.quadLegRight[self.legRight], 130, 104)
 
-	-- Draw arms and legs
-	love.graphics.draw(self.imgArmLeft, self.quadArmLeft[math.floor(self.armLeft)], 91, 69)
-	love.graphics.draw(self.imgArmRight, self.quadArmRight[math.floor(self.armRight)], 134, 69)
-	love.graphics.draw(self.imgLegLeft, self.quadLegLeft[math.floor(self.legLeft)], 104, 105)
-	love.graphics.draw(self.imgLegRight, self.quadLegRight[math.floor(self.legRight)], 130, 104)
+	self.animTorso:draw(113, 41)
 end
 
 return Player

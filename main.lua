@@ -1,9 +1,10 @@
 WIDTH = 256
 HEIGHT = 192
-SCALE = 4
+SCALE = 3
 
 ResMgr = require("resmgr")
 require("AnAL")
+require("util")
 local Ingame = require("ingame")
 
 local state
