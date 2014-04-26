@@ -9,7 +9,7 @@ function Ingame:enter()
 	self.world = love.physics.newWorld(0, 0, true)
 	
 	self.player = Player.create()
-	self.blanket = Blanket.create(self.world, WIDTH/2-30, HEIGHT/2-45, WIDTH/2+30, HEIGHT/2+45)
+	self.blanket = Blanket.create(self.world, WIDTH/2-27, HEIGHT/2-30, WIDTH/2+33, HEIGHT/2+65)
 
 	self.imgBackground = ResMgr.getImage("background.png")
 	self.imgCursorNormal = ResMgr.getImage("cursor_normal.png")

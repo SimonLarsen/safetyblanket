@@ -30,7 +30,7 @@ function Blanket:createMesh(world, x1, y1, x2, y2, distance)
 			p.body = love.physics.newBody(world, x1+ix*distance, y1+iy*distance, "dynamic")
 			p.body:setLinearDamping(Blanket.LINEAR_DAMPING)
 			p.body:setAngularDamping(Blanket.ANGULAR_DAMPING)
-			p.shape = love.physics.newCircleShape(distance/3)
+			p.shape = love.physics.newCircleShape(distance/2)
 			p.fixture = love.physics.newFixture(p.body, p.shape)
 			self.p[ix][iy] = p
 		end
@@ -61,9 +61,7 @@ end
 
 function Blanket:draw()
 	-- Draw blanket
-	self.blanketShader:send("plaid", ResMgr.getImage("plaid.png"))
-	self.blanketShader:send("screen", {WIDTH, HEIGHT})
-	love.graphics.setShader(self.blanketShader)
+	love.graphics.setColor(222, 66, 66)
 	for ix=1,self.xpoints-1 do
 		for iy=1,self.ypoints-1 do
 			local b1 = self.p[ix-1][iy-1].body
@@ -73,7 +71,6 @@ function Blanket:draw()
 			love.graphics.polygon("fill", b1:getX(), b1:getY(), b2:getX(), b2:getY(), b3:getX(), b3:getY(), b4:getX(), b4:getY())
 		end
 	end
-	love.graphics.setShader()
 
 	-- Draw outline
 	love.graphics.setColor(0, 0, 0)
