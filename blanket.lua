@@ -42,11 +42,11 @@ function Blanket:createMesh(world, x1, y1, x2, y2, distance)
 			local p = self.p[ix][iy]
 			if ix > 0 then
 				local f = self.p[ix-1][iy]
-				love.physics.newDistanceJoint(f.body, p.body, f.body:getX(), f.body:getY(), p.body:getX(), p.body:getY(), true)
+				love.physics.newDistanceJoint(f.body, p.body, f.body:getX(), f.body:getY(), p.body:getX(), p.body:getY(), false)
 			end
 			if iy > 0 then
 				local f = self.p[ix][iy-1]
-				love.physics.newDistanceJoint(f.body, p.body, f.body:getX(), f.body:getY(), p.body:getX(), p.body:getY(), true)
+				love.physics.newDistanceJoint(f.body, p.body, f.body:getX(), f.body:getY(), p.body:getX(), p.body:getY(), false)
 			end
 		end
 	end
@@ -57,6 +57,7 @@ function Blanket:update(dt)
 	if self.mousejoint then
 		self.mousejoint:setTarget(love.mouse.getPosition())
 	end
+	print(self:isCovered(love.mouse.getPosition()))
 end
 
 function Blanket:draw()
@@ -127,6 +128,18 @@ function Blanket:mousereleased(x, y, button)
 
 	self.mousejoint:destroy()
 	self.mousejoint = nil
+end
+
+function Blanket:isCovered(x, y)
+	for ix=0, self.xpoints-1 do
+		for iy=0, self.ypoints-1 do
+			local px, py = self.p[ix][iy].body:getPosition()
+			if (x - px)^2 + (y - py)^2 < 16 then
+				return true
+			end
+		end
+	end
+	return false
 end
 
 return Blanket
