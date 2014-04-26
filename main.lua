@@ -9,6 +9,7 @@ require("util")
 Ingame = require("ingame")
 Title = require("title")
 GameOver = require("gameover")
+Introduction = require("introduction")
 
 local state
 local canvas

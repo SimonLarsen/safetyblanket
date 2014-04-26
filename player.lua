@@ -12,11 +12,11 @@ Player.DANGER_DECREASE = 0.2
 function Player.create()
 	local self = setmetatable({}, Player)
 
-	self.nextChange = 0
 	self.changeDelay = 5
+	self.nextChange = self.changeDelay
 
-	self.nextMove = 0
 	self.moveDelay = 0.5
+	self.nextMove = self.moveDelay
 
 	self.armLeft, self.armRight = 0, 0
 	self.legLeft, self.legRight = 0, 0

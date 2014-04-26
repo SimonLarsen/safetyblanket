@@ -2,8 +2,7 @@ local Title = {}
 Title.__index = Title
 
 Title.STATE_FADEIN = 0
-Title.STATE_ACTIVE = 1
-Title.STATE_FADEOUT = 2
+Title.STATE_FADEOUT = 1
 
 function Title:enter()
 	self.bg = ResMgr.getImage("title.png")
@@ -30,14 +29,11 @@ function Title:update(dt)
 
 	if self.state == Title.STATE_FADEIN then
 		self.fade = self.fade - dt/2
-		if self.fade <= 0 then
-			self.state = Title.STATE_ACTIVE
-		end
 	
 	elseif self.state == Title.STATE_FADEOUT then
 		self.fade = self.fade + dt
 		if self.fade >= 1 then
-			switchState(Ingame)
+			switchState(Introduction)
 		end
 	end
 end
@@ -78,7 +74,7 @@ end
 
 function Title:mousereleased(x, y, button)
 	if button == "l" then
-		if self.state == Title.STATE_ACTIVE or self.state == Title.STATE_FADEIN then
+		if self.state == Title.STATE_FADEIN then
 			self.state = Title.STATE_FADEOUT
 			self.fade = math.max(self.fade, 0)
 		end
