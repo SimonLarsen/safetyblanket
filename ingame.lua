@@ -7,7 +7,9 @@ function Ingame:enter()
 	love.physics.setMeter(100/1.8)
 	self.world = love.physics.newWorld(0, 0, true)
 	
-	self.blanket = Blanket.create(self.world, WIDTH/2-90, HEIGHT/2-115, WIDTH/2+90, HEIGHT/2+115, 16)
+	self.blanket = Blanket.create(self.world, WIDTH/2-90, HEIGHT/2-115, WIDTH/2+90, HEIGHT/2+115)
+
+	self.imgBackground = ResMgr.getImage("background.png")
 end
 
 function Ingame:update(dt)
@@ -16,6 +18,7 @@ function Ingame:update(dt)
 end
 
 function Ingame:draw()
+	love.graphics.draw(self.imgBackground, 0, 0)
 	self.blanket:draw()
 end
 

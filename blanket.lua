@@ -1,13 +1,19 @@
 local Blanket = {}
 Blanket.__index = Blanket
 
-function Blanket.create(world, x1, y1, x2, y2, distance)
+Blanket.LINEAR_DAMPING = 2
+Blanket.ANGULAR_DAMPING = 3
+Blanket.DISTANCE = 12
+
+function Blanket.create(world, x1, y1, x2, y2)
 	local self = setmetatable({}, Blanket)
 
-	self.xpoints = math.floor((x2 - x1) / distance)
-	self.ypoints = math.floor((y2 - y1) / distance)
+	self.xpoints = math.floor((x2 - x1) / Blanket.DISTANCE)
+	self.ypoints = math.floor((y2 - y1) / Blanket.DISTANCE)
 
-	self:createMesh(world, x1, y1, x2, y2,distance)
+	self:createMesh(world, x1, y1, x2, y2, Blanket.DISTANCE)
+	local shader = require("blanketshader")
+	self.blanketShader = love.graphics.newShader(shader.pixelcode, shader.vertexcode)
 
 	self.mousejoint = nil
 
@@ -22,8 +28,8 @@ function Blanket:createMesh(world, x1, y1, x2, y2, distance)
 		for iy=0, self.ypoints-1 do
 			local p = {}
 			p.body = love.physics.newBody(world, x1+ix*distance, y1+iy*distance, "dynamic")
-			p.body:setLinearDamping(4)
-			p.body:setAngularDamping(4)
+			p.body:setLinearDamping(Blanket.LINEAR_DAMPING)
+			p.body:setAngularDamping(Blanket.ANGULAR_DAMPING)
 			p.shape = love.physics.newCircleShape(distance/3)
 			p.fixture = love.physics.newFixture(p.body, p.shape)
 			self.p[ix][iy] = p
@@ -54,15 +60,21 @@ function Blanket:update(dt)
 end
 
 function Blanket:draw()
+	--love.graphics.setColor(230, 150, 20)
+	self.blanketShader:send("plaid", ResMgr.getImage("plaid.png"))
+	self.blanketShader:send("screen", {WIDTH*2, HEIGHT*2})
+	love.graphics.setShader(self.blanketShader)
 	for ix=1,self.xpoints-1 do
 		for iy=1,self.ypoints-1 do
 			local b1 = self.p[ix-1][iy-1].body
 			local b2 = self.p[ix][iy-1].body
 			local b3 = self.p[ix][iy].body
 			local b4 = self.p[ix-1][iy].body
-			love.graphics.polygon("line", b1:getX(), b1:getY(), b2:getX(), b2:getY(), b3:getX(), b3:getY(), b4:getX(), b4:getY())
+			love.graphics.polygon("fill", b1:getX(), b1:getY(), b2:getX(), b2:getY(), b3:getX(), b3:getY(), b4:getX(), b4:getY())
 		end
 	end
+	love.graphics.setShader()
+	--love.graphics.setColor(255, 255, 255)
 end
 
 function Blanket:mousepressed(x, y, button)
