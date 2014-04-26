@@ -7,7 +7,7 @@ local legLeftPos  = { {120, 145}, {96, 137}, {84, 117} }
 local legRightPos = { {134, 145}, {160, 137}, {171, 117} }
 
 Player.DANGER_INCREASE = 0.1
-Player.DANGER_DECREASE = 0.2
+Player.DANGER_DECREASE = 0.1
 
 function Player.create()
 	local self = setmetatable({}, Player)
@@ -108,13 +108,6 @@ function Player:draw()
 	love.graphics.draw(self.imgLegRight, self.quadLegRight[self.legRight], 129, 105)
 
 	self.animTorso:draw(113, 41)
-
-	love.graphics.setColor(0, 255, 0)
-	love.graphics.rectangle("fill", 0, 32, self.legLeftDanger*WIDTH, 13)
-	love.graphics.rectangle("fill", 0, 48, self.legRightDanger*WIDTH, 13)
-	love.graphics.rectangle("fill", 0, 64, self.armLeftDanger*WIDTH, 13)
-	love.graphics.rectangle("fill", 0, 80, self.armRightDanger*WIDTH, 13)
-	love.graphics.setColor(255, 255, 255)
 end
 
 return Player

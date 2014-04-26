@@ -1,5 +1,6 @@
 local Player = require("player")
 local Blanket = require("blanket")
+local Tentacle = require("tentacle")
 
 local Ingame = {}
 Ingame.__index = Ingame
@@ -15,6 +16,11 @@ function Ingame:enter()
 	self.imgCursorNormal = ResMgr.getImage("cursor_normal.png")
 	self.imgCursorPinch = ResMgr.getImage("cursor_pinch.png")
 
+	self.legLeftTentacle  = Tentacle.create(1.25*math.pi)
+	self.legRightTentacle = Tentacle.create(1.75*math.pi)
+	self.armLeftTentacle  = Tentacle.create(0.75*math.pi)
+	self.armRightTentacle = Tentacle.create(0.25*math.pi)
+
 	local shader = require("chromashader")
 	self.chromashader = love.graphics.newShader(shader.pixelcode, shader.vertexcode)
 end
@@ -23,12 +29,25 @@ function Ingame:update(dt)
 	self.player:update(dt, self.blanket)
 	self.blanket:update(dt)
 	self.world:update(dt)
+
+	self.legLeftTentacle:update(dt)
+	self.legLeftTentacle:setDanger(self.player.legLeftDanger)
+	self.legRightTentacle:update(dt)
+	self.legRightTentacle:setDanger(self.player.legRightDanger)
+	self.armLeftTentacle:update(dt)
+	self.armLeftTentacle:setDanger(self.player.armLeftDanger)
+	self.armRightTentacle:update(dt)
+	self.armRightTentacle:setDanger(self.player.armRightDanger)
 end
 
 function Ingame:draw()
 	love.graphics.draw(self.imgBackground, 0, 0)
 	self.player:draw()
 	self.blanket:draw()
+	self.legLeftTentacle:draw()
+	self.legRightTentacle:draw()
+	self.armLeftTentacle:draw()
+	self.armRightTentacle:draw()
 
 	local mx, my = love.mouse.getPosition()
 	if love.mouse.isDown("l") then
