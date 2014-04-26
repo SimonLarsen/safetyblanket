@@ -21,7 +21,7 @@ function Tentacle:update(dt)
 		end
 		self.nextSwitch = 0.1
 	end
-	if self.anim.position > 4 and self.danger < 0.8 then
+	if self.anim.position > 4 and self.danger < 0.7 then
 		self.anim:seek(math.random(1, 4))
 	end
 end
