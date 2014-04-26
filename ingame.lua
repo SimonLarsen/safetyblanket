@@ -1,6 +1,7 @@
 local Player = require("player")
 local Blanket = require("blanket")
 local Tentacle = require("tentacle")
+local Demon = require("demon")
 local Clock = require("clock")
 
 local Ingame = {}
@@ -27,6 +28,7 @@ function Ingame:enter()
 	self.legRightTentacle = Tentacle.create(1.75*math.pi)
 	self.armLeftTentacle  = Tentacle.create(0.75*math.pi)
 	self.armRightTentacle = Tentacle.create(0.25*math.pi)
+	self.demon = Demon.create()
 
 	local shader = require("chromashader")
 	self.chromashader = love.graphics.newShader(shader.pixelcode, shader.vertexcode)
@@ -48,10 +50,13 @@ function Ingame:update(dt)
 	self.armLeftTentacle:setDanger(self.player.armLeftDanger)
 	self.armRightTentacle:update(dt)
 	self.armRightTentacle:setDanger(self.player.armRightDanger)
+	self.demon:update(dt)
+	self.demon:setDanger(self.player.headDanger)
 
 	self.maxDanger = maxArg(
 		self.player.armLeftDanger,  self.player.armRightDanger,
-		self.player.legLeftDanger,  self.player.legRightDanger
+		self.player.legLeftDanger,  self.player.legRightDanger,
+		self.player.headDanger
 	)
 	if self.maxDanger >= 1 then
 		switchState(GameOver)
@@ -68,6 +73,7 @@ function Ingame:draw()
 	self.legRightTentacle:draw()
 	self.armLeftTentacle:draw()
 	self.armRightTentacle:draw()
+	self.demon:draw()
 
 	local mx, my = love.mouse.getPosition()
 	if love.mouse.isDown("l") then

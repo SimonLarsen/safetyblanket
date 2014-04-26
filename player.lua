@@ -7,13 +7,13 @@ local legLeftPos  = { {120, 145}, {96, 137}, {84, 117} }
 local legRightPos = { {134, 145}, {160, 137}, {171, 117} }
 
 Player.DANGER_INCREASE = 0.1
-Player.DANGER_DECREASE = 0.15
+Player.DANGER_DECREASE = 0.2
 
 function Player.create()
 	local self = setmetatable({}, Player)
 
 	self.nextChange = 0
-	self.changeDelay = 3
+	self.changeDelay = 5
 
 	self.nextMove = 0
 	self.moveDelay = 0.5
@@ -23,6 +23,7 @@ function Player.create()
 
 	self.armLeftTarget, self.armRightTarget = 0, 0
 	self.legLeftTarget, self.legRightTarget = 0, 0
+	self.headDanger = 0
 
 	self.armLeftDanger,  self.armRightDanger = 0, 0
 	self.legLeftDanger,  self.legRightDanger = 0, 0
@@ -84,6 +85,11 @@ function Player:update(dt, blanket)
 		self.armRightDanger = math.max(0, self.armRightDanger - dt*Player.DANGER_DECREASE)
 	else
 		self.armRightDanger = math.min(1, self.armRightDanger + dt*Player.DANGER_INCREASE)
+	end
+	if blanket:isCovered(129, 52) then
+		self.headDanger = math.max(0, self.headDanger - dt*Player.DANGER_DECREASE)
+	else
+		self.headDanger = math.min(1, self.headDanger + dt*Player.DANGER_INCREASE)
 	end
 end
 
