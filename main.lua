@@ -31,17 +31,11 @@ end
 function love.draw()
 	love.graphics.push()
 
-	if canvas then
-		love.graphics.setCanvas(canvas)
-		state:draw()
-		love.graphics.scale(SCALE, SCALE)
-		love.graphics.setCanvas()
-		love.graphics.draw(canvas, 0, 0)
-
-	else
-		love.graphics.scale(SCALE, SCALE)
-		state:draw()
-	end
+	love.graphics.setCanvas(canvas)
+	state:draw()
+	love.graphics.scale(SCALE, SCALE)
+	love.graphics.setCanvas()
+	love.graphics.draw(canvas, 0, 0)
 
 	love.graphics.pop()
 	love.graphics.print(love.timer.getFPS(), 16, 16)
