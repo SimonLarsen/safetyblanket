@@ -17,6 +17,7 @@ function Ingame:enter()
 	self.player = Player.create()
 	self.blanket = Blanket.create(self.world, WIDTH/2-27, HEIGHT/2-30, WIDTH/2+33, HEIGHT/2+65)
 	self.clock = Clock.create(Ingame.GAME_DURATION)
+	self.maxDanger = 0
 
 	self.imgBackground = ResMgr.getImage("background.png")
 	self.imgCursorNormal = ResMgr.getImage("cursor_normal.png")
@@ -47,6 +48,14 @@ function Ingame:update(dt)
 	self.armLeftTentacle:setDanger(self.player.armLeftDanger)
 	self.armRightTentacle:update(dt)
 	self.armRightTentacle:setDanger(self.player.armRightDanger)
+
+	self.maxDanger = maxArg(
+		self.player.armLeftDanger,  self.player.armRightDanger,
+		self.player.legLeftDanger,  self.player.legRightDanger
+	)
+	if self.maxDanger >= 1 then
+		switchState(GameOver)
+	end
 end
 
 function Ingame:draw()
@@ -81,14 +90,10 @@ function Ingame:mousereleased(x, y, button)
 end
 
 function Ingame:afterEffect(canvas)
-	local maxDanger = maxArg(
-		self.player.armLeftDanger,  self.player.armRightDanger,
-		self.player.legLeftDanger,  self.player.legRightDanger
-	)
-	if maxDanger > 0.6 then
+	if self.maxDanger > 0.6 then
 		love.graphics.setShader(self.chromashader)
-		local offx = (math.random()-0.5) / 40 * (maxDanger-0.6)
-		local offy = (math.random()-0.5) / 40 * (maxDanger-0.6)
+		local offx = (math.random()-0.5) / 40 * (self.maxDanger-0.6)
+		local offy = (math.random()-0.5) / 40 * (self.maxDanger-0.6)
 		self.chromashader:send("offset", {offx, offy})
 	end
 end

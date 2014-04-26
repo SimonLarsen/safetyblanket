@@ -5,7 +5,10 @@ SCALE = 3
 ResMgr = require("resmgr")
 require("AnAL")
 require("util")
-local Ingame = require("ingame")
+
+Ingame = require("ingame")
+Title = require("title")
+GameOver = require("gameover")
 
 local state
 local canvas
@@ -21,7 +24,7 @@ function love.load()
 		canvas = love.graphics.newCanvas(WIDTH, HEIGHT)
 	end
 
-	switchState(Ingame)
+	switchState(Title)
 end
 
 function love.update(dt)
@@ -31,6 +34,7 @@ end
 function love.draw()
 	love.graphics.push()
 
+	canvas:clear()
 	love.graphics.setCanvas(canvas)
 	state:draw()
 	love.graphics.scale(SCALE, SCALE)
