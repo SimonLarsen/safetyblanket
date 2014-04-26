@@ -45,7 +45,6 @@ function love.draw()
 	end
 
 	love.graphics.pop()
-	love.graphics.print(love.timer.getFPS(), 16, 16)
 end
 
 function love.mousepressed(x, y, button)
