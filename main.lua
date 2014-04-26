@@ -1,6 +1,6 @@
-WIDTH = 512
-HEIGHT = 384
-SCALE = 2
+WIDTH = 256
+HEIGHT = 192
+SCALE = 4
 
 ResMgr = require("resmgr")
 local Ingame = require("ingame")

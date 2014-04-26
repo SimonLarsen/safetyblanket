@@ -3,7 +3,7 @@ Blanket.__index = Blanket
 
 Blanket.LINEAR_DAMPING = 2
 Blanket.ANGULAR_DAMPING = 3
-Blanket.DISTANCE = 12
+Blanket.DISTANCE = 4
 
 function Blanket.create(world, x1, y1, x2, y2)
 	local self = setmetatable({}, Blanket)
@@ -62,7 +62,7 @@ end
 function Blanket:draw()
 	--love.graphics.setColor(230, 150, 20)
 	self.blanketShader:send("plaid", ResMgr.getImage("plaid.png"))
-	self.blanketShader:send("screen", {WIDTH*2, HEIGHT*2})
+	self.blanketShader:send("screen", {WIDTH*SCALE, HEIGHT*SCALE})
 	love.graphics.setShader(self.blanketShader)
 	for ix=1,self.xpoints-1 do
 		for iy=1,self.ypoints-1 do
