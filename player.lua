@@ -29,10 +29,10 @@ function Player.create()
 	self.quadLegLeft = {}
 	self.quadLegRight = {}
 	for i=0, 2 do
-		self.quadArmLeft[i] = love.graphics.newQuad(i*33, 0, 33, 39, 99, 39)
-		self.quadArmRight[i] = love.graphics.newQuad(i*33, 0, 33, 39, 99, 39)
-		self.quadLegLeft[i] = love.graphics.newQuad(i*27, 0, 27, 29, 81, 29)
-		self.quadLegRight[i] = love.graphics.newQuad(i*27, 0, 27, 29, 81, 29)
+		self.quadArmLeft[i]  = love.graphics.newQuad(i*39, 0, 39, 43, 117, 43)
+		self.quadArmRight[i] = love.graphics.newQuad(i*39, 0, 39, 43, 117, 43)
+		self.quadLegLeft[i]  = love.graphics.newQuad(i*49, 0, 49, 43, 147, 43)
+		self.quadLegRight[i] = love.graphics.newQuad(i*49, 0, 49, 43, 147, 43)
 	end
 
 	return self
@@ -69,10 +69,10 @@ function Player:move()
 end
 
 function Player:draw()
-	love.graphics.draw(self.imgArmLeft,  self.quadArmLeft[self.armLeft], 91, 69)
-	love.graphics.draw(self.imgArmRight, self.quadArmRight[self.armRight], 134, 69)
-	love.graphics.draw(self.imgLegLeft,  self.quadLegLeft[self.legLeft], 104, 105)
-	love.graphics.draw(self.imgLegRight, self.quadLegRight[self.legRight], 130, 104)
+	love.graphics.draw(self.imgArmLeft,  self.quadArmLeft[self.armLeft], 80, 69)
+	love.graphics.draw(self.imgArmRight, self.quadArmRight[self.armRight], 139, 69)
+	love.graphics.draw(self.imgLegLeft,  self.quadLegLeft[self.legLeft], 81, 105)
+	love.graphics.draw(self.imgLegRight, self.quadLegRight[self.legRight], 129, 105)
 
 	self.animTorso:draw(113, 41)
 end
