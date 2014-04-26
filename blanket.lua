@@ -3,7 +3,7 @@ Blanket.__index = Blanket
 
 Blanket.LINEAR_DAMPING = 3
 Blanket.ANGULAR_DAMPING = 3
-Blanket.DISTANCE = 4
+Blanket.DISTANCE = 5
 
 function Blanket.create(world, x1, y1, x2, y2)
 	local self = setmetatable({}, Blanket)
@@ -42,11 +42,11 @@ function Blanket:createMesh(world, x1, y1, x2, y2, distance)
 			local p = self.p[ix][iy]
 			if ix > 0 then
 				local f = self.p[ix-1][iy]
-				love.physics.newDistanceJoint(f.body, p.body, f.body:getX(), f.body:getY(), p.body:getX(), p.body:getY(), false)
+				love.physics.newRopeJoint(f.body, p.body, f.body:getX(), f.body:getY(), p.body:getX(), p.body:getY(), distance)
 			end
 			if iy > 0 then
 				local f = self.p[ix][iy-1]
-				love.physics.newDistanceJoint(f.body, p.body, f.body:getX(), f.body:getY(), p.body:getX(), p.body:getY(), false)
+				love.physics.newRopeJoint(f.body, p.body, f.body:getX(), f.body:getY(), p.body:getX(), p.body:getY(), distance)
 			end
 		end
 	end
@@ -57,7 +57,6 @@ function Blanket:update(dt)
 	if self.mousejoint then
 		self.mousejoint:setTarget(love.mouse.getPosition())
 	end
-	print(self:isCovered(love.mouse.getPosition()))
 end
 
 function Blanket:draw()
