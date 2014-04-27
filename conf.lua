@@ -1,9 +1,9 @@
 function love.conf(t)
-    t.identity = "securityblanket"
+    t.identity = "safetyblanket"
     t.version = "0.9.1"
     t.console = false
 
-    t.window.title = "Security Blanket"
+    t.window.title = "Safety Blanket"
     t.window.icon = nil
     t.window.width = 1024
     t.window.height = 768

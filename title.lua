@@ -66,6 +66,12 @@ function Title:leave()
 	
 end
 
+function Title:keypressed(k)
+	if k == "escape" then
+		love.event.quit()
+	end
+end
+
 function Title:mousepressed(x, y, button)
 end
 
@@ -74,6 +80,7 @@ function Title:mousereleased(x, y, button)
 		if self.state == Title.STATE_FADEIN then
 			self.state = Title.STATE_FADEOUT
 			self.fade = math.max(self.fade, 0)
+			ResMgr.playSound("pageturn.wav")
 		end
 	end
 end

@@ -65,6 +65,7 @@ function Winscreen:mousereleased(x, y, button)
 		if self.state == Winscreen.STATE_FADEIN then
 			self.state = Winscreen.STATE_FADEOUT
 			self.fade = math.max(self.fade, 0)
+			ResMgr.playSound("pageturn.wav")
 		end
 	end
 end

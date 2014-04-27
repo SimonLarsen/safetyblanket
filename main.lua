@@ -56,6 +56,12 @@ function love.draw()
 	love.graphics.pop()
 end
 
+function love.keypressed(...)
+	if state.keypressed then
+		state:keypressed(...)
+	end
+end
+
 function love.mousepressed(x, y, button)
 	x = x / SCALE
 	y = y / SCALE

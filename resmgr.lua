@@ -23,7 +23,7 @@ end
 
 function ResMgr.getSound(path)
 	if ResMgr.sounds[path] == nil then
-		ResMgr.sounds[path] = love.audio.newSource("res/sfx/" .. path)
+		ResMgr.sounds[path] = love.audio.newSource("res/sfx/" .. path, "static")
 		print("Loaded sound: " .. path)
 	end
 	

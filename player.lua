@@ -8,7 +8,7 @@ local legRightPos = { {134, 145}, {160, 137}, {171, 117} }
 
 Player.DANGER_INCREASE_START = 0.08
 Player.DANGER_INCREASE_END   = 0.10
-Player.DANGER_DECREASE = 0.5
+Player.DANGER_DECREASE = 0.6
 
 Player.CHANGE_DELAY_START = 4
 Player.CHANGE_DELAY_END   = 2.5

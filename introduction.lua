@@ -54,6 +54,7 @@ function Introduction:mousereleased(x, y, button)
 		if self.state == Introduction.STATE_FADEIN then
 			self.state = Introduction.STATE_FADEOUT
 			self.fade = math.max(self.fade, 0)
+			ResMgr.playSound("pageturn.wav")
 		end
 	end
 end

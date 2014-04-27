@@ -35,6 +35,17 @@ function Ingame:enter()
 	self.armRightTentacle = Tentacle.create(0.25*math.pi)
 	self.demon = Demon.create()
 
+	self.noise = {}
+	self.noise[1] = love.audio.newSource("res/sfx/noise1.ogg", "stream")
+	self.noise[2] = love.audio.newSource("res/sfx/noise2.ogg", "stream")
+	self.noise[3] = love.audio.newSource("res/sfx/noise3.ogg", "stream")
+
+	for i,v in ipairs(self.noise) do
+		v:setLooping(true)
+		v:setVolume(0)
+		v:play()
+	end
+
 	local shader = require("chromashader")
 	self.chromashader = love.graphics.newShader(shader.pixelcode)
 
@@ -65,11 +76,21 @@ function Ingame:update(dt)
 		self.demon:update(dt)
 		self.demon:setDanger(self.player.headDanger)
 
+		self.noise[1]:setVolume(self.player.maxDanger)
+		self.noise[2]:setVolume(self.player.maxDanger)
+		self.noise[3]:setVolume(self.player.headDanger)
+
 		if self.time >= Ingame.GAME_DURATION then
 			self.state = Ingame.STATE_WON
 			self.fade = 0
 			ResMgr.playSound("alarm.wav")
+			for i,v in ipairs(self.noise) do
+				v:stop()
+			end
 		elseif self.player.maxDanger >= 1 then
+			for i,v in ipairs(self.noise) do
+				v:stop()
+			end
 			switchState(GameOver, self.clock)
 		end
 	
@@ -110,6 +131,12 @@ end
 
 function Ingame:leave()
 
+end
+
+function Ingame:keypressed(k)
+	if k == "escape" then
+		switchState(Title)
+	end
 end
 
 function Ingame:mousepressed(x, y, button)
