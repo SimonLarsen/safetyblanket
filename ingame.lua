@@ -148,9 +148,9 @@ function Ingame:mousereleased(x, y, button)
 end
 
 function Ingame:afterEffect(canvas)
-	if self.player.maxDanger > 0.98 then
+	if self.player.maxDanger > 0.96 then
 		self.gameovershader:send("disp", self.imgDisplacement)
-		if self.player.maxDanger > 0.99 then
+		if self.player.maxDanger > 0.98 then
 			self.gameovershader:send("screen", {WIDTH*SCALE, HEIGHT*SCALE})
 		else
 			self.gameovershader:send("screen", {WIDTH*SCALE, 0.5*HEIGHT*SCALE})
