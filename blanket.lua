@@ -120,7 +120,7 @@ function Blanket:mousepressed(x, y, button)
 	end
 
 	if closest then
-		ResMgr.playSound("cloth"..math.random(1,2)..".wav")
+		ResMgr.playSound("cloth1.wav")
 		self.mousejoint = love.physics.newMouseJoint(closest.body, x, y)
 	end
 end
