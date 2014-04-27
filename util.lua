@@ -42,3 +42,11 @@ function printShadow(text, x, y, offset)
 	love.graphics.setColor(255, 255, 255, 255)
 	love.graphics.print(text, x, y)
 end
+
+function printfShadow(text, x, y, limit, align, offset)
+	local offset = offset or 1
+	love.graphics.setColor(0, 0, 0, 128)
+	love.graphics.printf(text, x, y+offset, limit, align)
+	love.graphics.setColor(255, 255, 255, 255)
+	love.graphics.printf(text, x, y, limit, align)
+end

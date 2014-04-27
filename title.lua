@@ -46,7 +46,7 @@ function Title:draw()
 	love.graphics.draw(self.text[self.textFrame], 9, 12)
 
 	love.graphics.setFont(ResMgr.getFont("bmgermar.ttf", 13))
-	love.graphics.printf("CLICK TO CONTINUE", 10, 153, 125, "center")
+	printfShadow("CLICK TO CONTINUE", 10, 153, 125, "center", 2)
 
 	if self.fade > 0 then
 		love.graphics.setColor(0, 0, 0, self.fade*255)

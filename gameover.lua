@@ -49,6 +49,8 @@ function GameOver:draw()
 	printShadow("Your best:", 16, 56)
 	printShadow(self.bestTimeStr, 24, 72)
 
+	printfShadow("Click to try again", 0, HEIGHT-20, WIDTH, "center", 1)
+
 	if self.fade > 0 then
 		local alpha = math.min(255, self.fade*255)
 		love.graphics.setColor(0, 0, 0, alpha)
@@ -69,14 +71,13 @@ function GameOver:leave()
 end
 
 function GameOver:mousepressed(x, y, button)
+end
+
+function GameOver:mousereleased(x, y, button)
 	if button == "l" and self.state == GameOver.STATE_FADEIN then
 		self.state = GameOver.STATE_FADEOUT
 		self.fade = math.max(0, self.fade)
 	end
-end
-
-function GameOver:mousereleased(x, y, button)
-	
 end
 
 return GameOver

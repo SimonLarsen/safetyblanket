@@ -13,7 +13,7 @@ function Blanket.create(world, x1, y1, x2, y2)
 
 	self:createMesh(world, x1, y1, x2, y2, Blanket.DISTANCE)
 	local shader = require("blanketshader")
-	self.blanketShader = love.graphics.newShader(shader.pixelcode, shader.vertexcode)
+	self.blanketShader = love.graphics.newShader(shader.pixelcode)
 
 	ResMgr.getImage("plaid.png"):setWrap("repeat", "repeat")
 

@@ -30,7 +30,7 @@ function Ingame:enter()
 	self.demon = Demon.create()
 
 	local shader = require("chromashader")
-	self.chromashader = love.graphics.newShader(shader.pixelcode, shader.vertexcode)
+	self.chromashader = love.graphics.newShader(shader.pixelcode)
 end
 
 function Ingame:update(dt)
