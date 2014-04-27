@@ -9,8 +9,13 @@ Ingame.__index = Ingame
 
 Ingame.GAME_DURATION = 3*60
 
+Ingame.STATE_ACTIVE = 0
+Ingame.STATE_WON = 1
+
 function Ingame:enter()
 	self.time = 0
+	self.fade = 0
+	self.state = Ingame.STATE_ACTIVE
 
 	love.physics.setMeter(100/1.8)
 	self.world = love.physics.newWorld(0, 0, true)
@@ -38,30 +43,42 @@ function Ingame:enter()
 end
 
 function Ingame:update(dt)
-	if love.keyboard.isDown("w") then
-		switchState(Winscreen)
-	end
+	if self.state == Ingame.STATE_ACTIVE then
+		if love.keyboard.isDown("q") then
+			self.time = Ingame.GAME_DURATION-1
+		end
+		self.time = self.time + dt
+		self.clock:setTime(self.time)
 
-	self.time = self.time + dt
-	self.clock:setTime(self.time)
+		self.player:update(dt, self.blanket, self.time, Ingame.GAME_DURATION)
+		self.blanket:update(dt)
+		self.world:update(dt)
 
-	self.player:update(dt, self.blanket, self.time, Ingame.GAME_DURATION)
-	self.blanket:update(dt)
-	self.world:update(dt)
+		self.legLeftTentacle:update(dt)
+		self.legLeftTentacle:setDanger(self.player.legLeftDanger)
+		self.legRightTentacle:update(dt)
+		self.legRightTentacle:setDanger(self.player.legRightDanger)
+		self.armLeftTentacle:update(dt)
+		self.armLeftTentacle:setDanger(self.player.armLeftDanger)
+		self.armRightTentacle:update(dt)
+		self.armRightTentacle:setDanger(self.player.armRightDanger)
+		self.demon:update(dt)
+		self.demon:setDanger(self.player.headDanger)
 
-	self.legLeftTentacle:update(dt)
-	self.legLeftTentacle:setDanger(self.player.legLeftDanger)
-	self.legRightTentacle:update(dt)
-	self.legRightTentacle:setDanger(self.player.legRightDanger)
-	self.armLeftTentacle:update(dt)
-	self.armLeftTentacle:setDanger(self.player.armLeftDanger)
-	self.armRightTentacle:update(dt)
-	self.armRightTentacle:setDanger(self.player.armRightDanger)
-	self.demon:update(dt)
-	self.demon:setDanger(self.player.headDanger)
-
-	if self.player.maxDanger >= 1 then
-		switchState(GameOver, self.clock)
+		if self.time >= Ingame.GAME_DURATION then
+			self.state = Ingame.STATE_WON
+			self.fade = 0
+			ResMgr.playSound("alarm.wav")
+		elseif self.player.maxDanger >= 1 then
+			switchState(GameOver, self.clock)
+		end
+	
+	elseif self.state == Ingame.STATE_WON then
+		self.fade = self.fade + dt/3
+		if self.fade >= 1 then
+			saveScore(Ingame.GAME_DURATION)
+			switchState(Winscreen)
+		end
 	end
 end
 
@@ -76,6 +93,12 @@ function Ingame:draw()
 	self.armLeftTentacle:draw()
 	self.armRightTentacle:draw()
 	self.demon:draw()
+
+	if self.fade > 0 then
+		love.graphics.setColor(255, 255, 255, self.fade*255)
+		love.graphics.rectangle("fill", 0, 0, WIDTH, HEIGHT)
+		love.graphics.setColor(255, 255, 255, 255)
+	end
 
 	local mx, my = love.mouse.getPosition()
 	if love.mouse.isDown("l") then

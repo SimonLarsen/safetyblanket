@@ -14,7 +14,7 @@ end
 
 function Winscreen:update(dt)
 	if self.state == Winscreen.STATE_FADEIN then
-		self.fade = self.fade - dt
+		self.fade = self.fade - dt/2
 	
 	elseif self.state == Winscreen.STATE_FADEOUT then
 		self.fade = self.fade + dt
@@ -35,7 +35,11 @@ function Winscreen:draw()
 	love.graphics.setColor(255, 255, 255, 255)
 
 	if self.fade > 0 then
-		love.graphics.setColor(0, 0, 0, self.fade*255)
+		if self.state == Winscreen.STATE_FADEIN then
+			love.graphics.setColor(255, 255, 255, self.fade*255)
+		else
+			love.graphics.setColor(0, 0, 0, self.fade*255)
+		end
 		love.graphics.rectangle("fill", 0, 0, WIDTH, HEIGHT)
 		love.graphics.setColor(255, 255, 255, 255)
 	end

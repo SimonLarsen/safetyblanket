@@ -2,6 +2,7 @@ local ResMgr = {}
 
 ResMgr.images = {}
 ResMgr.fonts = {}
+ResMgr.sounds = {}
 
 function ResMgr.getImage(path)
 	if ResMgr.images[path] == nil then
@@ -18,6 +19,19 @@ function ResMgr.getFont(path, size)
 	end
 
 	return ResMgr.fonts[path..size]
+end
+
+function ResMgr.getSound(path)
+	if ResMgr.sounds[path] == nil then
+		ResMgr.sounds[path] = love.audio.newSource("res/sfx/" .. path)
+		print("Loaded sound: " .. path)
+	end
+	
+	return ResMgr.sounds[path]
+end
+
+function ResMgr.playSound(path)
+	ResMgr.getSound(path):play()
 end
 
 return ResMgr

@@ -4,8 +4,9 @@ SCALE = 4
 
 ResMgr = require("resmgr")
 require("AnAL")
-require("util")
+require("slam")
 require("data")
+require("util")
 require("Tserial")
 
 Ingame = require("ingame")
@@ -32,12 +33,6 @@ function love.load()
 end
 
 function love.update(dt)
-	if love.keyboard.isDown("s") then
-		dt = dt/8
-	end
-	if love.keyboard.isDown("f") then
-		dt = dt*4
-	end
 	state:update(dt)
 end
 
