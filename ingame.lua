@@ -38,9 +38,10 @@ function Ingame:enter()
 end
 
 function Ingame:update(dt)
-	if love.keyboard.isDown("q") then
-		self.time = 3/8*Ingame.GAME_DURATION
+	if love.keyboard.isDown("w") then
+		switchState(Winscreen)
 	end
+
 	self.time = self.time + dt
 	self.clock:setTime(self.time)
 
@@ -97,12 +98,12 @@ function Ingame:mousereleased(x, y, button)
 end
 
 function Ingame:afterEffect(canvas)
-	if self.player.maxDanger > 0.96 then
+	if self.player.maxDanger > 0.98 then
 		self.gameovershader:send("disp", self.imgDisplacement)
-		if self.player.maxDanger > 0.98 then
+		if self.player.maxDanger > 0.99 then
 			self.gameovershader:send("screen", {WIDTH*SCALE, HEIGHT*SCALE})
 		else
-			self.gameovershader:send("screen", {WIDTH*SCALE, -2*HEIGHT*SCALE})
+			self.gameovershader:send("screen", {WIDTH*SCALE, 0.5*HEIGHT*SCALE})
 		end
 		local offx = (math.random()-0.5) / 40
 		local offy = (math.random()-0.5) / 40

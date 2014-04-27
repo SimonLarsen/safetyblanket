@@ -12,6 +12,7 @@ Ingame = require("ingame")
 Title = require("title")
 GameOver = require("gameover")
 Introduction = require("introduction")
+Winscreen = require("winscreen")
 
 local state
 local canvas
@@ -31,6 +32,9 @@ function love.load()
 end
 
 function love.update(dt)
+	if love.keyboard.isDown("s") then
+		dt = dt/8
+	end
 	if love.keyboard.isDown("f") then
 		dt = dt*4
 	end
