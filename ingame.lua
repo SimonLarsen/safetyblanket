@@ -38,10 +38,13 @@ function Ingame:enter()
 end
 
 function Ingame:update(dt)
+	if love.keyboard.isDown("q") then
+		self.time = 3/8*Ingame.GAME_DURATION
+	end
 	self.time = self.time + dt
 	self.clock:setTime(self.time)
 
-	self.player:update(dt, self.blanket)
+	self.player:update(dt, self.blanket, self.time, Ingame.GAME_DURATION)
 	self.blanket:update(dt)
 	self.world:update(dt)
 

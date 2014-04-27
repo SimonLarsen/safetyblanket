@@ -74,7 +74,7 @@ function GameOver:mousepressed(x, y, button)
 end
 
 function GameOver:mousereleased(x, y, button)
-	if button == "l" and self.state == GameOver.STATE_FADEIN then
+	if button == "l" and self.state == GameOver.STATE_FADEIN and self.fade < 0.5 then
 		self.state = GameOver.STATE_FADEOUT
 		self.fade = math.max(0, self.fade)
 	end

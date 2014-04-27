@@ -6,8 +6,16 @@ local armRightPos = { {140, 108}, {163, 101}, {174, 73} }
 local legLeftPos  = { {120, 145}, {96, 137}, {84, 117} }
 local legRightPos = { {134, 145}, {160, 137}, {171, 117} }
 
-Player.DANGER_INCREASE = 0.1
-Player.DANGER_DECREASE = 0.2
+Player.DANGER_INCREASE_START = 0.08
+Player.DANGER_INCREASE_END   = 0.10
+Player.DANGER_DECREASE = 0.5
+
+Player.CHANGE_DELAY_START = 4
+Player.CHANGE_DELAY_END   = 2.5
+
+Player.DEMON_THRESHOLD = 3/8
+Player.DEMON_DELAY_START = 40
+Player.DEMON_DELAY_END   = 1
 
 function Player.create()
 	local self = setmetatable({}, Player)
@@ -17,6 +25,8 @@ function Player.create()
 
 	self.moveDelay = 0.5
 	self.nextMove = self.moveDelay
+
+	self.demonDelay = 0
 
 	self.armLeft, self.armRight = 0, 0
 	self.legLeft, self.legRight = 0, 0
@@ -54,7 +64,7 @@ function Player.create()
 	return self
 end
 
-function Player:update(dt, blanket)
+function Player:update(dt, blanket, time, duration)
 	self.animTorso:update(dt)
 	self.animTorsoPanic:update(dt)
 
@@ -70,31 +80,49 @@ function Player:update(dt, blanket)
 		self:move()
 	end
 
+	-- Update delays
+	local progress = time / duration
+	self.changeDelay = Player.CHANGE_DELAY_START + progress*(Player.CHANGE_DELAY_END - Player.CHANGE_DELAY_START)
+	self.dangerIncrease = Player.DANGER_INCREASE_START + progress*(Player.DANGER_INCREASE_END - Player.DANGER_INCREASE_START)
+
 	-- Check which body parts are not covered
-	if blanket:isCovered(unpack(legLeftPos[self.legLeft+1])) then
-		self.legLeftDanger = math.max(0, self.legLeftDanger - dt*Player.DANGER_DECREASE)
+	if not blanket:isCovered(unpack(legLeftPos[self.legLeft+1])) then
+		self.legLeftDanger = math.min(1, self.legLeftDanger + dt*self.dangerIncrease)
 	else
-		self.legLeftDanger = math.min(1, self.legLeftDanger + dt*Player.DANGER_INCREASE)
+		self.legLeftDanger = math.max(0, self.legLeftDanger - dt*self.dangerIncrease)
 	end
-	if blanket:isCovered(unpack(legRightPos[self.legRight+1])) then
-		self.legRightDanger = math.max(0, self.legRightDanger - dt*Player.DANGER_DECREASE)
+	if not blanket:isCovered(unpack(legRightPos[self.legRight+1])) then
+		self.legRightDanger = math.min(1, self.legRightDanger + dt*self.dangerIncrease)
 	else
-		self.legRightDanger = math.min(1, self.legRightDanger + dt*Player.DANGER_INCREASE)
+		self.legRightDanger = math.max(0, self.legRightDanger - dt*self.dangerIncrease)
 	end
-	if blanket:isCovered(unpack(armLeftPos[self.armLeft+1])) then
-		self.armLeftDanger = math.max(0, self.armLeftDanger - dt*Player.DANGER_DECREASE)
+	if not blanket:isCovered(unpack(armLeftPos[self.armLeft+1])) then
+		self.armLeftDanger = math.min(1, self.armLeftDanger + dt*self.dangerIncrease)
 	else
-		self.armLeftDanger = math.min(1, self.armLeftDanger + dt*Player.DANGER_INCREASE)
+		self.armLeftDanger = math.max(0, self.armLeftDanger - dt*self.dangerIncrease)
 	end
-	if blanket:isCovered(unpack(armRightPos[self.armRight+1])) then
-		self.armRightDanger = math.max(0, self.armRightDanger - dt*Player.DANGER_DECREASE)
+	if not blanket:isCovered(unpack(armRightPos[self.armRight+1])) then
+		self.armRightDanger = math.min(1, self.armRightDanger + dt*self.dangerIncrease)
 	else
-		self.armRightDanger = math.min(1, self.armRightDanger + dt*Player.DANGER_INCREASE)
+		self.armRightDanger = math.max(0, self.armRightDanger - dt*self.dangerIncrease)
 	end
-	if blanket:isCovered(129, 52) then
-		self.headDanger = math.max(0, self.headDanger - dt*Player.DANGER_DECREASE)
+
+	if self.headDanger >= 0 then
+		if not blanket:isCovered(129, 52) then
+			if progress > Player.DEMON_THRESHOLD then
+				self.headDanger = math.min(1, self.headDanger + dt*self.dangerIncrease)
+			end
+		else
+			self.headDanger = self.headDanger - dt*self.dangerIncrease
+		end
+		if self.headDanger < 0 then
+			self.demonDelay = Player.DEMON_DELAY_START + progress*(Player.DEMON_DELAY_END - Player.DEMON_DELAY_START)
+		end
 	else
-		self.headDanger = math.min(1, self.headDanger + dt*Player.DANGER_INCREASE)
+		self.demonDelay = self.demonDelay - dt
+		if progress > Player.DEMON_THRESHOLD and self.demonDelay < 0 then
+			self.headDanger = 0
+		end
 	end
 
 	self.maxDanger = maxArg(
