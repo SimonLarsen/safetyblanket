@@ -18,6 +18,9 @@ function Title:enter()
 
 	self.fade = 1
 	self.state = Title.STATE_FADEIN
+	self.music = love.audio.newSource("res/sfx/title.ogg", "stream")
+	self.music:setLooping(true)
+	self.music:play()
 end
 
 function Title:update(dt)
@@ -33,7 +36,7 @@ function Title:update(dt)
 	elseif self.state == Title.STATE_FADEOUT then
 		self.fade = self.fade + dt
 		if self.fade >= 1 then
-			switchState(Introduction)
+			switchState(Introduction, self.music)
 		end
 	end
 end

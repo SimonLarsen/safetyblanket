@@ -4,10 +4,12 @@ Introduction.__index = Introduction
 Introduction.STATE_FADEIN = 0
 Introduction.STATE_FADEOUT = 1
 
-function Introduction:enter()
+function Introduction:enter(music)
 	self.bg = ResMgr.getImage("introduction.png")
 	self.imgCursorNormal = ResMgr.getImage("cursor_normal.png")
 	self.imgCursorPinch = ResMgr.getImage("cursor_pinch.png")
+	self.music = music
+
 	self.fade = 1
 	self.state = Introduction.STATE_FADEIN
 end
@@ -18,6 +20,7 @@ function Introduction:update(dt)
 
 	elseif self.state == Introduction.STATE_FADEOUT then
 		self.fade = self.fade + dt
+		self.music:setVolume(1-self.fade)
 		if self.fade >= 1 then
 			switchState(Ingame)
 		end
@@ -42,7 +45,7 @@ function Introduction:draw()
 end
 
 function Introduction:leave()
-	
+	self.music:stop()
 end
 
 function Introduction:mousepressed(x, y, button)

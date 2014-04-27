@@ -4,6 +4,13 @@ function saveScore(time)
 	love.filesystem.write("score", strdata)
 end
 
+function updateScore(time)
+	local score = loadScore()
+	if time > score.time then
+		saveScore(time)
+	end
+end
+
 function loadScore()
 	if love.filesystem.exists("score") == false then
 		return {time = 0}

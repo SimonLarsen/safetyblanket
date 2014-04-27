@@ -8,14 +8,14 @@ local legRightPos = { {134, 145}, {160, 137}, {171, 117} }
 
 Player.DANGER_INCREASE_START = 0.08
 Player.DANGER_INCREASE_END   = 0.10
-Player.DANGER_DECREASE = 0.6
+Player.DANGER_DECREASE = 0.8
 
 Player.CHANGE_DELAY_START = 4
 Player.CHANGE_DELAY_END   = 2.5
 
 Player.DEMON_THRESHOLD = 3/8
 Player.DEMON_DELAY_START = 40
-Player.DEMON_DELAY_END   = 1
+Player.DEMON_DELAY_END   = 4
 
 function Player.create()
 	local self = setmetatable({}, Player)

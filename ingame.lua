@@ -77,27 +77,24 @@ function Ingame:update(dt)
 		self.demon:setDanger(self.player.headDanger)
 
 		self.noise[1]:setVolume(self.player.maxDanger)
-		self.noise[2]:setVolume(self.player.maxDanger)
+		self.noise[2]:setVolume(math.max(0.05, self.player.maxDanger))
 		self.noise[3]:setVolume(self.player.headDanger)
 
 		if self.time >= Ingame.GAME_DURATION then
 			self.state = Ingame.STATE_WON
 			self.fade = 0
 			ResMgr.playSound("alarm.wav")
-			for i,v in ipairs(self.noise) do
-				v:stop()
-			end
 		elseif self.player.maxDanger >= 1 then
-			for i,v in ipairs(self.noise) do
-				v:stop()
-			end
 			switchState(GameOver, self.clock)
 		end
 	
 	elseif self.state == Ingame.STATE_WON then
 		self.fade = self.fade + dt/3
+		for i,v in ipairs(self.noise) do
+			v:setVolume(1-self.fade)
+		end
 		if self.fade >= 1 then
-			saveScore(Ingame.GAME_DURATION)
+			updateScore(self.clock:getClockTime())
 			switchState(Winscreen)
 		end
 	end
@@ -130,7 +127,9 @@ function Ingame:draw()
 end
 
 function Ingame:leave()
-
+	for i,v in ipairs(self.noise) do
+		v:stop()
+	end
 end
 
 function Ingame:keypressed(k)

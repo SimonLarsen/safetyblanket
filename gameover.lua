@@ -13,13 +13,9 @@ function GameOver:enter(clock)
 	self.time = clock:getClockTime()
 	self.timeStr = digitsToString(timeToDigits(self.time))
 
+	updateScore(self.time)
 	local score = loadScore()
-	if self.time > score.time then
-		self.bestTime = self.time
-		saveScore(self.time)
-	else
-		self.bestTime = score.time
-	end
+	self.bestTime = score.time
 	self.bestTimeStr = digitsToString(timeToDigits(self.bestTime))
 
 	self.bg = ResMgr.getImage("gameover.png")
