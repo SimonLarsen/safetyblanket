@@ -53,7 +53,7 @@ function Ingame:update(dt)
 	self.demon:setDanger(self.player.headDanger)
 
 	if self.player.maxDanger >= 1 then
-		switchState(GameOver)
+		switchState(GameOver, self.clock)
 	end
 end
 

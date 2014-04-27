@@ -46,22 +46,19 @@ function Title:draw()
 	love.graphics.draw(self.text[self.textFrame], 9, 12)
 
 	love.graphics.setFont(ResMgr.getFont("bmgermar.ttf", 13))
-	love.graphics.setColor(0, 0, 0, 128)
-	love.graphics.printf("CLICK TO CONTINUE", 10, 155, 125, "center")
-	love.graphics.setColor(255, 255, 255, 255)
 	love.graphics.printf("CLICK TO CONTINUE", 10, 153, 125, "center")
+
+	if self.fade > 0 then
+		love.graphics.setColor(0, 0, 0, self.fade*255)
+		love.graphics.rectangle("fill", 0, 0, WIDTH, HEIGHT)
+		love.graphics.setColor(255, 255, 255, 255)
+	end
 
 	local mx, my = love.mouse.getPosition()
 	if love.mouse.isDown("l") then
 		love.graphics.draw(self.imgCursorPinch, mx, my, 0, 1, 1, 4, 12)
 	else
 		love.graphics.draw(self.imgCursorNormal, mx, my, 0, 1, 1, 4, 12)
-	end
-
-	if self.fade > 0 then
-		love.graphics.setColor(0, 0, 0, self.fade*255)
-		love.graphics.rectangle("fill", 0, 0, WIDTH, HEIGHT)
-		love.graphics.setColor(255, 255, 255, 255)
 	end
 end
 

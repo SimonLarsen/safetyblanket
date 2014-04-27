@@ -21,17 +21,18 @@ function Clock:setTime(time)
 end
 
 function Clock:draw()
-	local mytime = self.time * (8*60)/self.duration + 11*60
-	local hours = math.floor(mytime / 60) % 12
-	local hour1 = math.floor(hours / 10)
-	local hour2 = hours % 10
-	local min1 = math.floor((mytime % 60) / 10)
-	local min2 = math.floor((mytime % 60) % 10)
+	local hour1, hour2, min1, min2 = timeToDigits(self:getClockTime())
 
-	love.graphics.draw(self.img, self.quadDigit[hour1], 61, 100)
+	if hour1 > 0 then
+		love.graphics.draw(self.img, self.quadDigit[hour1], 61, 100)
+	end
 	love.graphics.draw(self.img, self.quadDigit[hour2], 65, 100)
 	love.graphics.draw(self.img, self.quadDigit[min1], 71, 100)
 	love.graphics.draw(self.img, self.quadDigit[min2], 75, 100)
+end
+
+function Clock:getClockTime()
+	return self.time * (8*60)/self.duration + 11*60
 end
 
 return Clock

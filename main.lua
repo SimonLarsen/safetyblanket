@@ -1,10 +1,12 @@
 WIDTH = 256
 HEIGHT = 192
-SCALE = 3
+SCALE = 4
 
 ResMgr = require("resmgr")
 require("AnAL")
 require("util")
+require("data")
+require("Tserial")
 
 Ingame = require("ingame")
 Title = require("title")
