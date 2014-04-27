@@ -31,6 +31,9 @@ function love.load()
 end
 
 function love.update(dt)
+	if love.keyboard.isDown("f") then
+		dt = dt*4
+	end
 	state:update(dt)
 end
 

@@ -22,6 +22,7 @@ function Ingame:enter()
 	self.imgBackground = ResMgr.getImage("background.png")
 	self.imgCursorNormal = ResMgr.getImage("cursor_normal.png")
 	self.imgCursorPinch = ResMgr.getImage("cursor_pinch.png")
+	self.imgDisplacement = ResMgr.getImage("displacement.png")
 
 	self.legLeftTentacle  = Tentacle.create(1.25*math.pi)
 	self.legRightTentacle = Tentacle.create(1.75*math.pi)
@@ -31,6 +32,9 @@ function Ingame:enter()
 
 	local shader = require("chromashader")
 	self.chromashader = love.graphics.newShader(shader.pixelcode)
+
+	shader = require("gameovershader")
+	self.gameovershader = love.graphics.newShader(shader.pixelcode)
 end
 
 function Ingame:update(dt)
@@ -90,11 +94,22 @@ function Ingame:mousereleased(x, y, button)
 end
 
 function Ingame:afterEffect(canvas)
-	if self.player.maxDanger > 0.6 then
-		love.graphics.setShader(self.chromashader)
+	if self.player.maxDanger > 0.96 then
+		self.gameovershader:send("disp", self.imgDisplacement)
+		if self.player.maxDanger > 0.98 then
+			self.gameovershader:send("screen", {WIDTH*SCALE, HEIGHT*SCALE})
+		else
+			self.gameovershader:send("screen", {WIDTH*SCALE, -2*HEIGHT*SCALE})
+		end
+		local offx = (math.random()-0.5) / 40
+		local offy = (math.random()-0.5) / 40
+		self.gameovershader:send("offset", {offx, offy})
+		love.graphics.setShader(self.gameovershader)
+	elseif self.player.maxDanger > 0.6 then
 		local offx = (math.random()-0.5) / 40 * (self.player.maxDanger-0.6)
 		local offy = (math.random()-0.5) / 40 * (self.player.maxDanger-0.6)
 		self.chromashader:send("offset", {offx, offy})
+		love.graphics.setShader(self.chromashader)
 	end
 end
 
