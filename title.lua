@@ -96,6 +96,21 @@ end
 function Title:keypressed(k)
 	if k == "escape" then
 		love.event.quit()
+	elseif k == "f1" then
+		SCALE = 1
+		updateMode()
+	elseif k == "f2" then
+		SCALE = 2
+		updateMode()
+	elseif k == "f3" then
+		SCALE = 3
+		updateMode()
+	elseif k == "f4" then
+		SCALE = 4
+		updateMode()
+	elseif k == "f5" then
+		SCALE = 5
+		updateMode()
 	end
 end
 
