@@ -1,6 +1,6 @@
 WIDTH = 256
 HEIGHT = 192
-SCALE = 4
+SCALE = 3
 
 ResMgr = require("resmgr")
 require("AnAL")
