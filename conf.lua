@@ -20,5 +20,4 @@ function love.conf(t)
     t.window.srgb = false
 
     t.modules.joystick = false
-    t.modules.math = false
 end

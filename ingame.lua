@@ -154,13 +154,13 @@ function Ingame:afterEffect(canvas)
 		else
 			self.gameovershader:send("screen", {WIDTH*SCALE, 0.5*HEIGHT*SCALE})
 		end
-		local offx = (math.random()-0.5) / 40
-		local offy = (math.random()-0.5) / 40
+		local offx = (love.math.random()-0.5) / 40
+		local offy = (love.math.random()-0.5) / 40
 		self.gameovershader:send("offset", {offx, offy})
 		love.graphics.setShader(self.gameovershader)
 	elseif self.player.maxDanger > 0.6 then
-		local offx = (math.random()-0.5) / 40 * (self.player.maxDanger-0.6)
-		local offy = (math.random()-0.5) / 40 * (self.player.maxDanger-0.6)
+		local offx = (love.math.random()-0.5) / 40 * (self.player.maxDanger-0.6)
+		local offy = (love.math.random()-0.5) / 40 * (self.player.maxDanger-0.6)
 		self.chromashader:send("offset", {offx, offy})
 		love.graphics.setShader(self.chromashader)
 	end

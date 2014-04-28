@@ -133,10 +133,10 @@ function Player:update(dt, blanket, time, duration)
 end
 
 function Player:changePosition()
-	self.armLeftTarget  = math.random(0, 2)
-	self.armRightTarget = math.random(0, 2)
-	self.legLeftTarget  = math.random(0, 2)
-	self.legRightTarget = math.random(0, 2)
+	self.armLeftTarget  = love.math.random(0, 2)
+	self.armRightTarget = love.math.random(0, 2)
+	self.legLeftTarget  = love.math.random(0, 2)
+	self.legRightTarget = love.math.random(0, 2)
 end
 
 function Player:move()
