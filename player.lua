@@ -8,7 +8,7 @@ local legRightPos = { {134, 145}, {160, 137}, {171, 117} }
 
 Player.DANGER_INCREASE_START = 0.08
 Player.DANGER_INCREASE_END   = 0.10
-Player.DANGER_DECREASE = 0.8
+Player.DANGER_DECREASE = 0.15
 
 Player.CHANGE_DELAY_START = 4
 Player.CHANGE_DELAY_END   = 2.5
@@ -89,22 +89,22 @@ function Player:update(dt, blanket, time, duration)
 	if not blanket:isCovered(unpack(legLeftPos[self.legLeft+1])) then
 		self.legLeftDanger = math.min(1, self.legLeftDanger + dt*self.dangerIncrease)
 	else
-		self.legLeftDanger = math.max(0, self.legLeftDanger - dt*self.dangerIncrease)
+		self.legLeftDanger = math.max(0, self.legLeftDanger - dt*Player.DANGER_DECREASE)
 	end
 	if not blanket:isCovered(unpack(legRightPos[self.legRight+1])) then
 		self.legRightDanger = math.min(1, self.legRightDanger + dt*self.dangerIncrease)
 	else
-		self.legRightDanger = math.max(0, self.legRightDanger - dt*self.dangerIncrease)
+		self.legRightDanger = math.max(0, self.legRightDanger - dt*Player.DANGER_DECREASE)
 	end
 	if not blanket:isCovered(unpack(armLeftPos[self.armLeft+1])) then
 		self.armLeftDanger = math.min(1, self.armLeftDanger + dt*self.dangerIncrease)
 	else
-		self.armLeftDanger = math.max(0, self.armLeftDanger - dt*self.dangerIncrease)
+		self.armLeftDanger = math.max(0, self.armLeftDanger - dt*Player.DANGER_DECREASE)
 	end
 	if not blanket:isCovered(unpack(armRightPos[self.armRight+1])) then
 		self.armRightDanger = math.min(1, self.armRightDanger + dt*self.dangerIncrease)
 	else
-		self.armRightDanger = math.max(0, self.armRightDanger - dt*self.dangerIncrease)
+		self.armRightDanger = math.max(0, self.armRightDanger - dt*Player.DANGER_DECREASE)
 	end
 
 	if self.headDanger >= 0 then
@@ -113,7 +113,7 @@ function Player:update(dt, blanket, time, duration)
 				self.headDanger = math.min(1, self.headDanger + dt*self.dangerIncrease)
 			end
 		else
-			self.headDanger = self.headDanger - dt*self.dangerIncrease
+			self.headDanger = self.headDanger - dt*Player.DANGER_DECREASE
 		end
 		if self.headDanger < 0 then
 			self.demonDelay = Player.DEMON_DELAY_START + progress*(Player.DEMON_DELAY_END - Player.DEMON_DELAY_START)
