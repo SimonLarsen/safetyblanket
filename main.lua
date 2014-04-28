@@ -19,7 +19,7 @@ local state
 local canvas
 
 function love.load()
-	love.window.setMode(WIDTH*SCALE, HEIGHT*SCALE, {fullscreen=false, vsync=false})
+	updateMode()
 	love.graphics.setDefaultFilter("nearest", "nearest")
 	love.graphics.setLineWidth(1)
 	love.graphics.setLineStyle("rough")
@@ -30,6 +30,10 @@ function love.load()
 	end
 
 	switchState(Title)
+end
+
+function updateMode()
+	love.window.setMode(WIDTH*SCALE, HEIGHT*SCALE, {fullscreen=false, vsync=true})
 end
 
 function love.update(dt)
@@ -56,9 +60,26 @@ function love.draw()
 	love.graphics.pop()
 end
 
-function love.keypressed(...)
+function love.keypressed(k)
+	if k == "f1" then
+		SCALE = 1
+		updateMode()
+	elseif k == "f2" then
+		SCALE = 2
+		updateMode()
+	elseif k == "f3" then
+		SCALE = 3
+		updateMode()
+	elseif k == "f4" then
+		SCALE = 4
+		updateMode()
+	elseif k == "f5" then
+		SCALE = 5
+		updateMode()
+	end
+	
 	if state.keypressed then
-		state:keypressed(...)
+		state:keypressed(k)
 	end
 end
 
