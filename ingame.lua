@@ -12,10 +12,11 @@ Ingame.GAME_DURATION = 3*60
 Ingame.STATE_ACTIVE = 0
 Ingame.STATE_WON = 1
 
-function Ingame:enter()
+function Ingame:enter(infinite)
 	self.time = 0
 	self.fade = 0
 	self.state = Ingame.STATE_ACTIVE
+	self.infinite = infinite or false
 
 	love.physics.setMeter(100/1.8)
 	self.world = love.physics.newWorld(0, 0, true)
@@ -80,7 +81,7 @@ function Ingame:update(dt)
 		self.noise[2]:setVolume(math.max(0.05, self.player.maxDanger))
 		self.noise[3]:setVolume(self.player.headDanger)
 
-		if self.time >= Ingame.GAME_DURATION then
+		if self.time >= Ingame.GAME_DURATION and self.infinite == false then
 			self.state = Ingame.STATE_WON
 			self.fade = 0
 			ResMgr.playSound("alarm.wav")
@@ -94,7 +95,7 @@ function Ingame:update(dt)
 			v:setVolume(math.min(v.volume, 1-self.fade))
 		end
 		if self.fade >= 1 then
-			updateScore(self.clock:getClockTime())
+			updateScore(self.clock:getClockTime(), true)
 			switchState(Winscreen)
 		end
 	end

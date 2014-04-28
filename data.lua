@@ -1,21 +1,24 @@
-function saveScore(time)
-	local data = {time = time}
+function saveScore(time, completed)
+	local data = {time = time, completed = completed}
 	local strdata = Tserial.pack(data)
 	love.filesystem.write("score", strdata)
 end
 
-function updateScore(time)
+function updateScore(time, completed)
 	local score = loadScore()
-	if time > score.time then
-		saveScore(time)
-	end
+	saveScore(math.max(time, score.time), completed or score.completed)
 end
 
 function loadScore()
 	if love.filesystem.exists("score") == false then
-		return {time = 0}
+		return {time = 0, completed = false}
 	end
 	local strdata = love.filesystem.read("score")
 	local data = Tserial.unpack(strdata)
-	return data
+
+	local out = {}
+	out.time = data.time or 0
+	out.completed = data.completed or false
+
+	return out
 end

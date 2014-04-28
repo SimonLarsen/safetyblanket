@@ -48,6 +48,12 @@ function Introduction:leave()
 	self.music:stop()
 end
 
+function Introduction:keypressed(k)
+	if k == "escape" then
+		switchState(Title)
+	end
+end
+
 function Introduction:mousepressed(x, y, button)
 	
 end

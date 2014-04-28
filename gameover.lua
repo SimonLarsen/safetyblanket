@@ -13,7 +13,7 @@ function GameOver:enter(clock)
 	self.time = clock:getClockTime()
 	self.timeStr = digitsToString(timeToDigits(self.time))
 
-	updateScore(self.time)
+	updateScore(self.time, false)
 	local score = loadScore()
 	self.bestTime = score.time
 	self.bestTimeStr = digitsToString(timeToDigits(self.bestTime))
