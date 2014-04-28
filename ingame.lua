@@ -56,9 +56,6 @@ end
 
 function Ingame:update(dt)
 	if self.state == Ingame.STATE_ACTIVE then
-		if love.keyboard.isDown("q") then
-			self.time = Ingame.GAME_DURATION-1
-		end
 		self.time = self.time + dt
 		self.clock:setTime(self.time)
 
