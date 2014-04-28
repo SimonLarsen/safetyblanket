@@ -91,7 +91,7 @@ function Ingame:update(dt)
 	elseif self.state == Ingame.STATE_WON then
 		self.fade = self.fade + dt/3
 		for i,v in ipairs(self.noise) do
-			v:setVolume(1-self.fade)
+			v:setVolume(math.min(v.volume, 1-self.fade))
 		end
 		if self.fade >= 1 then
 			updateScore(self.clock:getClockTime())
