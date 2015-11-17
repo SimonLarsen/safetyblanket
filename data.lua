@@ -1,6 +1,8 @@
+local Serial = require("Serial")
+
 function saveScore(time, completed)
 	local data = {time = time, completed = completed}
-	local strdata = Tserial.pack(data)
+	local strdata = Serial.pack(data)
 	love.filesystem.write("score", strdata)
 end
 
@@ -14,7 +16,7 @@ function loadScore()
 		return {time = 0, completed = false}
 	end
 	local strdata = love.filesystem.read("score")
-	local data = Tserial.unpack(strdata)
+	local data = Serial.unpack(strdata)
 
 	local out = {}
 	out.time = data.time or 0

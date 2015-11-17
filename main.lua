@@ -7,7 +7,6 @@ require("AnAL")
 require("slam")
 require("data")
 require("util")
-require("Tserial")
 
 Ingame = require("ingame")
 Title = require("title")
