@@ -27,6 +27,8 @@ end
 function Winscreen:draw()
 	love.graphics.draw(self.bg, 0, 0)
 
+	love.graphics.setFont(ResMgr.getFont("notalot35.ttf", 16))
+
 	printShadow("You managed to get a good nights sleep,", 10, 8, 1)
 	printShadow("now hurry up and get to work!", 10, 22, 1)
 

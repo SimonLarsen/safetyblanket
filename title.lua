@@ -73,7 +73,7 @@ function Title:draw()
 		love.graphics.setColor(255, 255, 255, 255)
 	end
 
-	love.graphics.setFont(ResMgr.getFont("bmgermar.ttf", 13))
+	love.graphics.setFont(ResMgr.getFont("notalot35.ttf", 16))
 	printfShadow("CLICK TO CONTINUE", 10, 153, 125, "center", 2)
 
 	if self.fade > 0 then

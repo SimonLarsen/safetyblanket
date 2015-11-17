@@ -38,7 +38,7 @@ end
 function GameOver:draw()
 	love.graphics.draw(self.bg, 0, 0)
 
-	love.graphics.setFont(ResMgr.getFont("bmgermar.ttf", 13))
+	love.graphics.setFont(ResMgr.getFont("notalot35.ttf", 16))
 	
 	printShadow("The night creeps ruined your sleep at:", 16, 16)
 	printShadow(self.timeStr, 24, 32)
