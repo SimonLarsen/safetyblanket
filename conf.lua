@@ -1,8 +1,8 @@
 function love.conf(t)
     t.identity = "safetyblanket"
-    t.version = "0.9.1"
+    t.version = "0.9.2"
     t.console = false
-
+ 
     t.window.title = "Safety Blanket"
     t.window.icon = nil
     t.window.width = 1024
@@ -18,6 +18,8 @@ function love.conf(t)
     t.window.display = 1
     t.window.highdpi = false
     t.window.srgb = false
-
-    t.modules.joystick = false
+    t.window.x = nil
+    t.window.y = nil
+ 
+    t.modules.joystick = true
 end
