@@ -1,6 +1,6 @@
 function love.conf(t)
     t.identity = "safetyblanket"
-    t.version = "0.9.2"
+    t.version = "0.10.2"
     t.console = false
  
     t.window.title = "Safety Blanket"
@@ -12,7 +12,7 @@ function love.conf(t)
     t.window.minwidth = 1
     t.window.minheight = 1
     t.window.fullscreen = false
-    t.window.fullscreentype = "normal"
+    t.window.fullscreentype = "desktop"
     t.window.vsync = true
     t.window.fsaa = 0
     t.window.display = 1

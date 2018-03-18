@@ -82,7 +82,7 @@ function Title:draw()
 		love.graphics.setColor(255, 255, 255, 255)
 	end
 
-	if love.mouse.isDown("l") then
+	if love.mouse.isDown(1) then
 		love.graphics.draw(self.imgCursorPinch, mx, my, 0, 1, 1, 4, 12)
 	else
 		love.graphics.draw(self.imgCursorNormal, mx, my, 0, 1, 1, 4, 12)
@@ -119,7 +119,7 @@ function Title:mousepressed(x, y, button)
 end
 
 function Title:mousereleased(x, y, button)
-	if button == "l" then
+	if button == 1 then
 		if self.state == Title.STATE_FADEIN then
 			if self.hasInf == true and x >= 208 and x <= 249 and y >= 7 and y <= 30 then
 				self.state = Title.STATE_FADEINF

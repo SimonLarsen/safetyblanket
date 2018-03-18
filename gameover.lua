@@ -55,7 +55,7 @@ function GameOver:draw()
 	end
 
 	local mx, my = love.mouse.getPosition()
-	if love.mouse.isDown("l") then
+	if love.mouse.isDown(1) then
 		love.graphics.draw(self.imgCursorPinch, mx, my, 0, 1, 1, 4, 12)
 	else
 		love.graphics.draw(self.imgCursorNormal, mx, my, 0, 1, 1, 4, 12)
@@ -70,7 +70,7 @@ function GameOver:mousepressed(x, y, button)
 end
 
 function GameOver:mousereleased(x, y, button)
-	if button == "l" and self.state == GameOver.STATE_FADEIN and self.fade < 0.5 then
+	if button == 1 and self.state == GameOver.STATE_FADEIN and self.fade < 0.5 then
 		self.state = GameOver.STATE_FADEOUT
 		self.fade = math.max(0, self.fade)
 		ResMgr.playSound("pageturn.wav")
