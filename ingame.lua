@@ -117,7 +117,7 @@ function Ingame:draw()
 	end
 
 	local mx, my = love.mouse.getPosition()
-	if love.mouse.isDown("l") then
+	if love.mouse.isDown(1) then
 		love.graphics.draw(self.imgCursorPinch, mx, my, 0, 1, 1, 4, 12)
 	else
 		love.graphics.draw(self.imgCursorNormal, mx, my, 0, 1, 1, 4, 12)

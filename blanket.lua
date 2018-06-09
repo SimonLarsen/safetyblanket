@@ -99,7 +99,7 @@ function Blanket:draw()
 end
 
 function Blanket:mousepressed(x, y, button)
-	if button ~= "l" then return end
+	if button ~= 1 then return end
 
 	if self.mousejoint then
 		self.mousejoint:destroy()
@@ -126,7 +126,7 @@ function Blanket:mousepressed(x, y, button)
 end
 
 function Blanket:mousereleased(x, y, button)
-	if button ~= "l" or self.mousejoint == nil then return end
+	if button ~= 1 or self.mousejoint == nil then return end
 
 	self.mousejoint:destroy()
 	self.mousejoint = nil

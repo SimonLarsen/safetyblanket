@@ -12,7 +12,7 @@ function updateScore(time, completed)
 end
 
 function loadScore()
-	if love.filesystem.exists("score") == false then
+	if love.filesystem.getInfo("score") == nil then
 		return {time = 0, completed = false}
 	end
 	local strdata = love.filesystem.read("score")

@@ -24,9 +24,7 @@ function love.load()
 	love.graphics.setLineStyle("rough")
 	love.mouse.setVisible(false)
 
-	if love.graphics.isSupported("canvas") then
-		canvas = love.graphics.newCanvas(WIDTH, HEIGHT)
-	end
+	canvas = love.graphics.newCanvas(WIDTH, HEIGHT)
 
 	switchState(Title)
 end
@@ -42,7 +40,7 @@ end
 function love.draw()
 	love.graphics.push()
 
-	canvas:clear()
+	love.graphics.clear()
 	love.graphics.setCanvas(canvas)
 	state:draw()
 	love.graphics.scale(SCALE, SCALE)
