@@ -32,22 +32,22 @@ function Winscreen:draw()
 	printShadow("You managed to get a good nights sleep,", 10, 8, 1)
 	printShadow("now hurry up and get to work!", 10, 22, 1)
 
-	love.graphics.setColor(0, 0, 0, 255)
+	love.graphics.setColor(0, 0, 0, 0.5)
 	love.graphics.printf("Click to continue", 0, HEIGHT-16, WIDTH, "center")
-	love.graphics.setColor(255, 255, 255, 255)
+	love.graphics.setColor(1, 1, 1, 1)
 
 	if self.fade > 0 then
 		if self.state == Winscreen.STATE_FADEIN then
-			love.graphics.setColor(255, 255, 255, self.fade*255)
+			love.graphics.setColor(1, 1, 1, self.fade)
 		else
-			love.graphics.setColor(0, 0, 0, self.fade*255)
+			love.graphics.setColor(0, 0, 0, self.fade)
 		end
 		love.graphics.rectangle("fill", 0, 0, WIDTH, HEIGHT)
-		love.graphics.setColor(255, 255, 255, 255)
+		love.graphics.setColor(1, 1, 1, 1)
 	end
 
 	local mx, my = love.mouse.getPosition()
-	if love.mouse.isDown("l") then
+	if love.mouse.isDown(1) then
 		love.graphics.draw(self.imgCursorPinch, mx, my, 0, 1, 1, 4, 12)
 	else
 		love.graphics.draw(self.imgCursorNormal, mx, my, 0, 1, 1, 4, 12)
@@ -63,7 +63,7 @@ function Winscreen:mousepressed(x, y, button)
 end
 
 function Winscreen:mousereleased(x, y, button)
-	if button == "l" then
+	if button == 1 then
 		if self.state == Winscreen.STATE_FADEIN then
 			self.state = Winscreen.STATE_FADEOUT
 			self.fade = math.max(self.fade, 0)

@@ -45,13 +45,13 @@ function Introduction:draw()
 	printfShadow(intro_text, 16, 14, WIDTH-32, "left", 1)
 
 	if self.fade > 0 then
-		love.graphics.setColor(0, 0, 0, self.fade*255)
+		love.graphics.setColor(0, 0, 0, self.fade)
 		love.graphics.rectangle("fill", 0, 0, WIDTH, HEIGHT)
-		love.graphics.setColor(255, 255, 255, 255)
+		love.graphics.setColor(1, 1, 1, 1)
 	end
 
 	local mx, my = love.mouse.getPosition()
-	if love.mouse.isDown("l") then
+	if love.mouse.isDown(1) then
 		love.graphics.draw(self.imgCursorPinch, mx, my, 0, 1, 1, 4, 12)
 	else
 		love.graphics.draw(self.imgCursorNormal, mx, my, 0, 1, 1, 4, 12)
@@ -73,7 +73,7 @@ function Introduction:mousepressed(x, y, button)
 end
 
 function Introduction:mousereleased(x, y, button)
-	if button == "l" then
+	if button == 1 then
 		if self.state == Introduction.STATE_FADEIN then
 			self.state = Introduction.STATE_FADEOUT
 			self.fade = math.max(self.fade, 0)

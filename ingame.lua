@@ -111,13 +111,13 @@ function Ingame:draw()
 	self.demon:draw()
 
 	if self.fade > 0 then
-		love.graphics.setColor(255, 255, 255, self.fade*255)
+		love.graphics.setColor(1, 1, 1, self.fade)
 		love.graphics.rectangle("fill", 0, 0, WIDTH, HEIGHT)
-		love.graphics.setColor(255, 255, 255, 255)
+		love.graphics.setColor(1, 1, 1, 1)
 	end
 
 	local mx, my = love.mouse.getPosition()
-	if love.mouse.isDown("l") then
+	if love.mouse.isDown(1) then
 		love.graphics.draw(self.imgCursorPinch, mx, my, 0, 1, 1, 4, 12)
 	else
 		love.graphics.draw(self.imgCursorNormal, mx, my, 0, 1, 1, 4, 12)

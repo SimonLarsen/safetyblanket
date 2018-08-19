@@ -1,6 +1,6 @@
 WIDTH = 256
 HEIGHT = 192
-SCALE = 3
+SCALE = 4
 
 ResMgr = require("resmgr")
 require("AnAL")
@@ -24,9 +24,7 @@ function love.load()
 	love.graphics.setLineStyle("rough")
 	love.mouse.setVisible(false)
 
-	if love.graphics.isSupported("canvas") then
-		canvas = love.graphics.newCanvas(WIDTH, HEIGHT)
-	end
+	canvas = love.graphics.newCanvas(WIDTH, HEIGHT)
 
 	switchState(Title)
 end
@@ -42,8 +40,8 @@ end
 function love.draw()
 	love.graphics.push()
 
-	canvas:clear()
 	love.graphics.setCanvas(canvas)
+	love.graphics.clear()
 	state:draw()
 	love.graphics.scale(SCALE, SCALE)
 	love.graphics.setCanvas()

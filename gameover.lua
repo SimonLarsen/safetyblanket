@@ -48,14 +48,14 @@ function GameOver:draw()
 	printfShadow("Click to try again", 0, HEIGHT-20, WIDTH, "center", 1)
 
 	if self.fade > 0 then
-		local alpha = math.min(255, self.fade*255)
+		local alpha = math.min(1, self.fade)
 		love.graphics.setColor(0, 0, 0, alpha)
 		love.graphics.rectangle("fill", 0, 0, WIDTH, HEIGHT)
-		love.graphics.setColor(255, 255, 255)
+		love.graphics.setColor(1, 1, 1, 1)
 	end
 
 	local mx, my = love.mouse.getPosition()
-	if love.mouse.isDown("l") then
+	if love.mouse.isDown(1) then
 		love.graphics.draw(self.imgCursorPinch, mx, my, 0, 1, 1, 4, 12)
 	else
 		love.graphics.draw(self.imgCursorNormal, mx, my, 0, 1, 1, 4, 12)
@@ -70,7 +70,7 @@ function GameOver:mousepressed(x, y, button)
 end
 
 function GameOver:mousereleased(x, y, button)
-	if button == "l" and self.state == GameOver.STATE_FADEIN and self.fade < 0.5 then
+	if button == 1 and self.state == GameOver.STATE_FADEIN and self.fade < 0.5 then
 		self.state = GameOver.STATE_FADEOUT
 		self.fade = math.max(0, self.fade)
 		ResMgr.playSound("pageturn.wav")

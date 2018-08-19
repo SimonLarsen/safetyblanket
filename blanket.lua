@@ -95,11 +95,11 @@ function Blanket:draw()
 		local r2 = self.p[self.xpoints-1][iy].body
 		love.graphics.line(r1:getX(), r1:getY(), r2:getX(), r2:getY())
 	end
-	love.graphics.setColor(255, 255, 255)
+	love.graphics.setColor(1, 1, 1)
 end
 
 function Blanket:mousepressed(x, y, button)
-	if button ~= "l" then return end
+	if button ~= 1 then return end
 
 	if self.mousejoint then
 		self.mousejoint:destroy()
@@ -126,7 +126,7 @@ function Blanket:mousepressed(x, y, button)
 end
 
 function Blanket:mousereleased(x, y, button)
-	if button ~= "l" or self.mousejoint == nil then return end
+	if button ~= 1 or self.mousejoint == nil then return end
 
 	self.mousejoint:destroy()
 	self.mousejoint = nil
